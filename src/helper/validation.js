@@ -20,5 +20,13 @@ export const registrationSchema = z.object({
         .regex(/[a-zA-Z]/, { message: "Password must contain at least one letter." })
         .regex(/[0-9]/, { message: "Password must contain at least one number." })
         .regex(/[^a-zA-Z0-9]/, { message: "Password must contain at least one special character." })
+});
+
+// Login validation message
+export const loginSchema = z.object({
+    email: z.string()
+        .nonempty({ message: "Email is required." })
         .trim(),
+    password: z.string()
+        .nonempty({ message: "Password is required." }),
 });

@@ -17,13 +17,34 @@ export const httpHeader = () => {
 }
 
 // Save data to API endpoint
-export const saveService = async (url, data) => {
+export const saveService = async (endpoint, data) => {
     try {
         const HEADER = httpHeader(); // Get custom header
-        const RESPONSE = await fetch(`${BASE_URL}${url}`, {
+        const RESPONSE = await fetch(`${BASE_URL}${endpoint}`, {
             method: "POST",
             headers: HEADER,
             body: JSON.stringify(data),
+        });
+
+        // Response data
+        const DATA = await RESPONSE.json();
+        return DATA;
+    } catch (err) {
+        return failedResponse(err);
+    }
+}
+
+// Login account
+export const loginService = async ({ email, password }) => {
+    try {
+        const HEADER = httpHeader(); // Get custom header
+        const RESPONSE = await fetch(`${BASE_URL}/api/v1/auth/login`, {
+            method: "POST",
+            headers: HEADER,
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
         });
 
         // Response data

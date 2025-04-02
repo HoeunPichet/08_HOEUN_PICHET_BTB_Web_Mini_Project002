@@ -1,14 +1,40 @@
 "use client";
+import { loginAction } from "@/action/login-action";
+import ErrorMessage from "@/components/messages/errorMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { KeyRound, Mail } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function LoginComponent() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Default error message
+  const [errors, setErrors] = useState({});
+
+  // State for loading
+  const [isPending, setIsPending] = useState(false);
+
+  // Apply register action when submitting form
+  const handleLogin = async (formData) => {
+    setIsPending(true);
+    const RESPONSE = await loginAction(formData);
+    if (typeof RESPONSE !== "undefined") {
+      setErrors(RESPONSE);
+    } else {
+      setErrors({});
+    }
+    setIsPending(false);
+  }
   return (
-    <form className="space-y-6 bg-white">
+    <form action={handleLogin} className="space-y-6 bg-white">
       {/* email */}
       <div>
         <Label
@@ -20,9 +46,13 @@ export default function LoginComponent() {
 
         <Input
           type="text"
+          name="email"
+          value={formData.email}
           placeholder="Please type your email"
-          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90`}
+          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.email && "border-red-500"}`}
+          onChange={handleChange}
         />
+        {errors.email && <ErrorMessage message={errors?.email[0]} />}
       </div>
 
       {/* password */}
@@ -36,9 +66,14 @@ export default function LoginComponent() {
 
         <Input
           type="password"
+          name="password"
+          value={formData.password}
           placeholder="Please type your password"
-          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90`}
+          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.password && "border-red-500"}`}
+          onChange={handleChange}
         />
+        {errors.password && <ErrorMessage message={errors?.password[0]} />}
+        {errors.incorrect && <ErrorMessage message={errors?.incorrect[0]} />}
       </div>
 
       {/* sign in button */}
@@ -46,7 +81,7 @@ export default function LoginComponent() {
         type="submit"
         className="text-base cursor-pointer bg-persian-green text-white py-2.5 rounded-lg w-full font-bold"
       >
-        Login
+        {isPending ? "Logging in..." : "Log in"}
       </Button>
 
       {/* underline */}

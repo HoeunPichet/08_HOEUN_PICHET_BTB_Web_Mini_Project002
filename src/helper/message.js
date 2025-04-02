@@ -1,7 +1,7 @@
 // Response successfully
 export const successResponse = (message) => {
     return {
-        status: "SUCCESS",
+        status: 200,
         message: message
     }
 }
