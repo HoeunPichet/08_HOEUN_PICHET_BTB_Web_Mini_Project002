@@ -35,3 +35,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.right-to-left {
+  animation: 3s rtl ease-in-out forwards;
+}
+
+@keyframes rtl {
+  0% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+    display: none;
+  }
+}

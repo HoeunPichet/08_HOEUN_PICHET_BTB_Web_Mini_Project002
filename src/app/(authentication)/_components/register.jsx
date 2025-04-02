@@ -1,87 +1,130 @@
 "use client";
+import { registerAction } from "@/action/register-action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { KeyRound, Mail, UserRound } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import ErrorMessage from "@/components/messages/errorMessage"
+import SweetAlert from "@/components/messages/sweetAlert";
 
 export default function RegisterComponent() {
+  // Default input field value
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  // Default error message
+  const [errors, setErrors] = useState({});
+
+  // Assign value to input field
+  const handleChange = (e) => {
+    const { NAME, VALUE } = e.target;
+    setFormData((prev) => ({ ...prev, [NAME]: VALUE }));
+  };
+
+  // Apply register action when submitting form
+  const handleRegister = async (formData) => {
+    const RESPONSE = await registerAction(formData);
+    if (typeof RESPONSE !== "undefined") {
+      setErrors(RESPONSE);
+    } else {
+      setErrors({});
+    }
+  }
+
   return (
-    <form className="space-y-6">
-      {/* username */}
-      <div>
-        <Label
-          htmlFor="username"
-          className="text-light-steel-blue flex gap-2 items-start mb-2 text-base"
-        >
-          <UserRound size={20} /> Username
-        </Label>
-
-        <Input
-          type="text"
-          placeholder="Please type your username"
-          className={` bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90`}
-        />
-      </div>
-
-      {/* email */}
-      <div>
-        <Label
-          htmlFor="email"
-          className="text-light-steel-blue flex gap-2 items-start mb-2  text-base"
-        >
-          <Mail size={20} /> Email
-        </Label>
-
-        <Input
-          type="text"
-          placeholder="Please type your email"
-          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90`}
-        />
-      </div>
-
-      {/* password */}
-      <div>
-        <Label
-          htmlFor="password"
-          className="text-light-steel-blue flex gap-2 items-start mb-2 text-base"
-        >
-          <KeyRound size={20} /> Password
-        </Label>
-
-        <Input
-          type="password"
-          placeholder="Please type your password"
-          className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90`}
-        />
-      </div>
-
-      {/* sign in button */}
-      <Button className="text-base cursor-pointer bg-persian-green text-white py-2.5 rounded-lg w-full font-bold">
-        Sign Up{" "}
-      </Button>
-
-      {/* underline */}
-      <div>
-        <div className="border-b border-b-light-steel-blue"></div>
-        <div className="text-right mt-2 font-normal">
-          Already have an account?{" "}
-          <Link
-            href={"/login"}
-            className="hover:text-persian-green hover:underline"
+    <>
+      <form action={handleRegister} className="space-y-6">
+        {/* username */}
+        <div className="relative">
+          <Label
+            htmlFor="username"
+            className="text-light-steel-blue flex gap-2 items-start mb-2 text-base"
           >
-            Login
-          </Link>
-        </div>
-      </div>
+            <UserRound size={20} /> Username
+          </Label>
 
-      {/* sign in with google */}
-      <div className=" bg-ghost-white rounded-lg text-center">
-        <Button className="flex gap-2 items-start justify-center w-full bg-ghost-white text-charcoal shadow-none hover:bg-ghost-white/50">
-          <img src="/Google Icon.svg" alt="google icon" /> Sign in with google
+          <Input
+            type="text"
+            name="username"
+            value={formData.username}
+            placeholder="Please type your username"
+            className={` bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.username && "border-red-500"}`}
+            onChange={handleChange}
+          />
+          {errors.username && <ErrorMessage message={errors?.username[0]} />}
+        </div>
+
+        {/* email */}
+        <div className="relative">
+          <Label
+            htmlFor="email"
+            className="text-light-steel-blue flex gap-2 items-start mb-2  text-base"
+          >
+            <Mail size={20} /> Email
+          </Label>
+
+          <Input
+            type="text"
+            name="email"
+            value={formData.email}
+            placeholder="Please type your email"
+            className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.email && "border-red-500"}`}
+            onChange={handleChange}
+          />
+          {errors.email && <ErrorMessage message={errors?.email[0]} />}
+        </div>
+
+        {/* password */}
+        <div className="relative">
+          <Label
+            htmlFor="password"
+            className="text-light-steel-blue flex gap-2 items-start mb-2 text-base"
+          >
+            <KeyRound size={20} /> Password
+          </Label>
+
+          <Input
+            type="password"
+            name="password"
+            value={formData.password}
+            placeholder="Please type your password"
+            className={`bg-ghost-white py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.password && "border-red-500"}`}
+            onChange={handleChange}
+          />
+          {errors.password && <ErrorMessage message={errors?.password[0]} />}
+        </div>
+
+        {/* sign in button */}
+        <Button type="submit" className="text-base cursor-pointer bg-persian-green text-white py-2.5 rounded-lg w-full font-bold">
+          Sign Up{" "}
         </Button>
-      </div>
-    </form>
+
+        {/* underline */}
+        <div>
+          <div className="border-b border-b-light-steel-blue"></div>
+          <div className="text-right mt-2 font-normal">
+            Already have an account?{" "}
+            <Link
+              href={"/login"}
+              className="text-persian-green hover:underline"
+            >
+              Login
+            </Link>
+          </div>
+        </div>
+
+        {/* sign in with google */}
+        <div className=" bg-ghost-white rounded-lg text-center">
+          <Button className="flex gap-2 items-start justify-center w-full bg-ghost-white text-charcoal shadow-none hover:bg-ghost-white/50">
+            <img src="/Google Icon.svg" alt="google icon" /> Sign in with google
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }

@@ -56,7 +56,7 @@ export default function LoginComponent() {
           create new accont?{" "}
           <Link
             href={"/register"}
-            className="hover:text-persian-green hover:underline"
+            className="text-persian-green hover:underline"
           >
             Sign Up
           </Link>
