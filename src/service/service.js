@@ -1,4 +1,5 @@
 import { failedResponse } from "@/helper/message";
+import { getAuthToken } from "@/utils/api";
 
 /**
  * @developer <Pichet>
@@ -9,10 +10,31 @@ import { failedResponse } from "@/helper/message";
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Custom request header
-export const httpHeader = () => {
+export const httpHeader = (token = "") => {
     return {
         "Content-Type": "application/json",
         "Accept": "*/*",
+        "Authorization": "Bearer " + token
+    }
+}
+
+// Save data to API endpoint
+export const getService = async (endpoint) => {
+    try {
+        const _SESSION = await getAuthToken();
+        const _TOKEN = _SESSION.payload.token;
+        const HEADER = httpHeader(_TOKEN); // Get custom header
+
+        const RESPONSE = await fetch(`${BASE_URL}${endpoint}`, {
+            method: "GET",
+            headers: HEADER,
+        });
+
+        // Response data
+        const DATA = await RESPONSE.json();
+        return DATA;
+    } catch (err) {
+        return failedResponse(err);
     }
 }
 

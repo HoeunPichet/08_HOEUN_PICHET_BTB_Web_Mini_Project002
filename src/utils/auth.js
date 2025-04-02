@@ -1,5 +1,5 @@
 import { failedResponse } from "@/helper/message";
-import { loginService } from "@/service/submit";
+import { loginService } from "@/service/service";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 

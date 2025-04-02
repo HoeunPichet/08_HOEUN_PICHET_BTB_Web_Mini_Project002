@@ -2,7 +2,7 @@
 
 import { successResponse } from "@/helper/message";
 import { registrationSchema } from "@/helper/validation";
-import { saveService } from "@/service/submit";
+import { saveService } from "@/service/service";
 
 /**
  * @developer <Pichet>
