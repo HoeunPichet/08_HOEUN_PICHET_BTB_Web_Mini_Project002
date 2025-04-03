@@ -4,6 +4,7 @@ import Workspace from "../workspace";
 import Logo from "../logo";
 import { getService } from "@/service/service";
 import { getRandomColorClass } from "@/helper/random";
+import { AddWorkspace } from "../modal/addWorkspace";
 
 export const Sidebar = async () => {
     const RESPONSE = await getService("/api/v1/workspaces", "update-workspace");
@@ -23,12 +24,10 @@ export const Sidebar = async () => {
                 <Logo />
             </div>
             {/* Workspace Section */}
-            <section className="grid w-full h-1/3 content-start">
+            <section className="grid w-full max-h-1/3 content-start">
                 <div className="flex w-full justify-between items-center gap-5 px-7">
                     <h2 className="font-semibold text-2xl text-light-steel-blue">Workspace</h2>
-                    <button type="button">
-                        <Image src="/add-square.svg" width={24} height={24} alt="Add Workspace" />
-                    </button>
+                    <AddWorkspace />
                 </div>
                 <div className="flex flex-col gap-1 mt-4 h-full overflow-auto">
                     {WORKSPACE && WORKSPACE.map(item => (
@@ -37,7 +36,7 @@ export const Sidebar = async () => {
                 </div>
             </section>
             {/* Favorite Section */}
-            <section className="grid w-full h-1/3 content-start mt-5">
+            <section className="grid w-full max-h-1/3 content-start mt-5">
                 <div className="flex w-full justify-between items-center gap-5 px-7">
                     <h2 className="font-semibold text-2xl text-light-steel-blue">Favorite</h2>
                     <button type="button">

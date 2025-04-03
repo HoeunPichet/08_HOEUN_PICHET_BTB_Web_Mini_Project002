@@ -30,3 +30,12 @@ export const loginSchema = z.object({
     password: z.string()
         .nonempty({ message: "Password is required." }),
 });
+
+// Workspace validation message
+export const workspaceSchema = z.object({
+    workspaceName: z.string()
+        .nonempty({ message: "Workspace Name is required." })
+        .min(3, { message: "Workspace Name must be at least 3 characters." })
+        .max(50, { message: "Workspace Name cannot be greater than 50 characters." })
+        .trim()
+});
