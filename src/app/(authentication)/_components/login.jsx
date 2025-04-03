@@ -1,5 +1,6 @@
 "use client";
 import { loginAction } from "@/action/login-action";
+import AlertBlock from "@/components/messages/alertBlock";
 import ErrorMessage from "@/components/messages/errorMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,8 +74,8 @@ export default function LoginComponent() {
           onChange={handleChange}
         />
         {errors.password && <ErrorMessage message={errors?.password[0]} />}
-        {errors.incorrect && <ErrorMessage message={errors?.incorrect[0]} />}
       </div>
+      {errors.incorrect && <AlertBlock message={errors?.incorrect[0]} type="error" />}
 
       {/* sign in button */}
       <Button

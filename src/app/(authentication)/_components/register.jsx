@@ -8,13 +8,15 @@ import Link from "next/link";
 import React, { useState } from "react";
 import ErrorMessage from "@/components/messages/errorMessage"
 import SweetAlert from "@/components/messages/sweetAlert";
+import AlertBlock from "@/components/messages/alertBlock";
+import { redirect } from "next/navigation";
 
 export default function RegisterComponent() {
   // Default input field value
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   // Default error message
@@ -22,8 +24,8 @@ export default function RegisterComponent() {
 
   // Assign value to input field
   const handleChange = (e) => {
-    const { NAME, VALUE } = e.target;
-    setFormData((prev) => ({ ...prev, [NAME]: VALUE }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Apply register action when submitting form
@@ -31,6 +33,9 @@ export default function RegisterComponent() {
     const RESPONSE = await registerAction(formData);
     if (typeof RESPONSE !== "undefined") {
       setErrors(RESPONSE);
+      setTimeout(() => {
+        if (RESPONSE?.status == 200) redirect("/login");
+      }, 1000)
     } else {
       setErrors({});
     }
@@ -98,6 +103,9 @@ export default function RegisterComponent() {
           />
           {errors.password && <ErrorMessage message={errors?.password[0]} />}
         </div>
+
+        {errors.status == 200 && <AlertBlock message={errors?.message} type="success" />}
+        {errors.status == 500 && <AlertBlock message={errors?.message} type="error" />}
 
         {/* sign in button */}
         <Button type="submit" className="text-base cursor-pointer bg-persian-green text-white py-2.5 rounded-lg w-full font-bold">

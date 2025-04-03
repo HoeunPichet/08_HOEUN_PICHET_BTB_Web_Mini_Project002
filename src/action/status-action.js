@@ -5,7 +5,7 @@ import { revalidateTag } from 'next/cache';
 
 /**
  * @developer <Pichet>
- * @since 02-April-2025
+ * @since 03-April-2025
  * @param {*} formData
  */
 export const favoriteAction = async (formData) => {
@@ -13,5 +13,5 @@ export const favoriteAction = async (formData) => {
     const IS_FAVORITE = formData?.get("favorite") ? true : false;
 
     await saveService(`/api/v1/workspace/${WS_ID}/favorite?favorite=${IS_FAVORITE}`, {}, "PATCH");
-    revalidateTag("update-workspace");
+    revalidateTag("update-status");
 }

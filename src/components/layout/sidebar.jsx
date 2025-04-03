@@ -18,7 +18,7 @@ export const Sidebar = async () => {
     })
 
     return (
-        <aside className="w-full max-w-sm px-2 broder-r h-screen max-h-screen overflow-auto flex flex-col gap-5 py-5 shadow shadow-gray-300">
+        <aside className="sticky top-0 w-full max-w-sm px-2 broder-r h-screen max-h-screen overflow-auto flex flex-col gap-5 py-5 shadow shadow-gray-300">
             <div className="py-8 flex w-full justify-center items-center">
                 <Logo />
             </div>

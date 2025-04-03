@@ -1,3 +1,4 @@
+"use client"
 import {
   Select,
   SelectContent,
@@ -5,10 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { saveService } from "@/service/service";
 import { Clock, Ellipsis } from "lucide-react";
 import React from "react";
 
 export default function CardComponent(props) {
+  let COLOR = "";
+  if (props?.status == "IN_PROGRESS")
+    COLOR = "royal-blue";
+  else if (props?.status == "FINISHED")
+    COLOR = "persian-green";
+  else
+    COLOR = "watermelon-red";
+
   return (
     <div className="border border-gray-300 rounded-xl mt-8">
       <div className="p-5">
@@ -29,7 +39,7 @@ export default function CardComponent(props) {
           </p>
 
           {/* status */}
-          <div className={`rounded-full w-8 h-8 bg-watermelon-red`}></div>
+          <div className={`rounded-full w-8 h-8 bg-${COLOR}`}></div>
         </div>
       </div>
 
@@ -37,9 +47,9 @@ export default function CardComponent(props) {
       <div className="flex justify-between items-center border-t border-t-gray-300 p-5">
         <Select>
           <SelectTrigger
-            className={`w-36 truncate border-watermelon-red text-watermelon-red`}
+            className={`w-36 truncate border-${COLOR} text-${COLOR}`}
           >
-            <SelectValue placeholder={"NOT_STARTED"} />
+            <SelectValue placeholder={props?.status || "NOT_STARTED"} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="NOT_STARTED">NOT_STARTED</SelectItem>

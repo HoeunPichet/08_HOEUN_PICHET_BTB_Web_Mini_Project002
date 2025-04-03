@@ -3,7 +3,7 @@ import { loginService } from "@/service/service";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
             credentials: {
@@ -22,10 +22,6 @@ export const { auth, signIn, signOut } = NextAuth({
             },
         }),
     ],
-    strategy: "jwt",
-    pages: {
-        signIn: "/login", // Redirect users to this page for sign-in
-    },
     callbacks: {
         async jwt(token) {
             return token;
@@ -34,5 +30,9 @@ export const { auth, signIn, signOut } = NextAuth({
             const { token } = props;
             return token.token.user;
         },
+    },
+    strategy: "jwt",
+    pages: {
+        signIn: "/login", // Redirect users to this page for sign-in
     },
 });

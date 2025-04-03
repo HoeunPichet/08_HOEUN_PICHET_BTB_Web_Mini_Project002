@@ -1,6 +1,5 @@
 import { failedResponse } from "@/helper/message";
 import { getAuthToken } from "@/utils/api";
-import { log } from "console";
 
 /**
  * @developer <Pichet>
@@ -19,7 +18,7 @@ export const httpHeader = (token = "") => {
     }
 }
 
-// Get data from API endpoint
+// Get data from API
 export const getService = async (endpoint, tag = null) => {
     try {
         const _SESSION = await getAuthToken();
@@ -42,7 +41,7 @@ export const getService = async (endpoint, tag = null) => {
     }
 }
 
-// Save data to API endpoint
+// Save or update data to API
 export const saveService = async (endpoint, data = {}, type = "POST") => {
     try {
         const _SESSION = await getAuthToken();
@@ -57,7 +56,10 @@ export const saveService = async (endpoint, data = {}, type = "POST") => {
 
         // Response data
         const DATA = await RESPONSE.json();
-        return DATA;
+        if (DATA?.status == "BAD_REQUEST")
+            return failedResponse(DATA?.message)
+        else
+            return DATA;
     } catch (err) {
         return failedResponse(err);
     }
