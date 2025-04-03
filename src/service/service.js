@@ -1,5 +1,6 @@
 import { failedResponse } from "@/helper/message";
 import { getAuthToken } from "@/utils/api";
+import { log } from "console";
 
 /**
  * @developer <Pichet>
@@ -18,16 +19,19 @@ export const httpHeader = (token = "") => {
     }
 }
 
-// Save data to API endpoint
-export const getService = async (endpoint) => {
+// Get data from API endpoint
+export const getService = async (endpoint, tag = null) => {
     try {
         const _SESSION = await getAuthToken();
-        const _TOKEN = _SESSION.payload.token;
+        const _TOKEN = _SESSION?.payload?.token || "";
         const HEADER = httpHeader(_TOKEN); // Get custom header
+
+        const TAGS = tag ? { tags: [tag] } : {};
 
         const RESPONSE = await fetch(`${BASE_URL}${endpoint}`, {
             method: "GET",
             headers: HEADER,
+            next: TAGS
         });
 
         // Response data
@@ -39,11 +43,14 @@ export const getService = async (endpoint) => {
 }
 
 // Save data to API endpoint
-export const saveService = async (endpoint, data) => {
+export const saveService = async (endpoint, data = {}, type = "POST") => {
     try {
-        const HEADER = httpHeader(); // Get custom header
+        const _SESSION = await getAuthToken();
+        const _TOKEN = _SESSION?.payload?.token || "";
+        const HEADER = httpHeader(_TOKEN); // Get custom header
+
         const RESPONSE = await fetch(`${BASE_URL}${endpoint}`, {
-            method: "POST",
+            method: type,
             headers: HEADER,
             body: JSON.stringify(data),
         });

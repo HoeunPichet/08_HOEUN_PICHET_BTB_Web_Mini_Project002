@@ -10,8 +10,6 @@ const COLORS = [
     "bg-watermelon-red",
     "bg-royal-blue",
     "bg-persian-green",
-    "bg-light-steel-blue",
-    "bg-ghost-white",
     "bg-charcoal",
 ];
 

@@ -25,7 +25,7 @@ export const registerAction = async (formData) => {
 
         if (RESPONSE?.status != 500) {
             // Existing account registration
-            if (RESPONSE.status === "CONFLICT") return { email: [RESPONSE.message] };
+            if (RESPONSE.status === "CONFLICT") return { email: [RESPONSE?.message] };
             // Successfully registration
             else return successResponse("Registration completed successfully!");
         } else {

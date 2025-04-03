@@ -11,7 +11,7 @@ export default async function Profile() {
             <Image src={"/notification.svg"} width={24} height={24} alt="Notification" />
             <div className="flex items-center gap-4">
                 {PAYLOAD?.profile &&
-                    <Image src={PAYLOAD?.profile} className="rounded-full object-cover" width={36} height={36} alt="Profile" />
+                    <Image src={PAYLOAD?.profile} className="rounded-full object-cover" width={40} height={40} alt="Profile" />
                 }
                 <dl className="flex flex-col">
                     <dt>{PAYLOAD?.username ?? ""}</dt>

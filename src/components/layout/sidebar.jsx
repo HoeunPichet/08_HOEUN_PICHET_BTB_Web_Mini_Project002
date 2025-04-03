@@ -6,7 +6,7 @@ import { getService } from "@/service/service";
 import { getRandomColorClass } from "@/helper/random";
 
 export const Sidebar = async () => {
-    const RESPONSE = await getService("/api/v1/workspaces");
+    const RESPONSE = await getService("/api/v1/workspaces", "update-workspace");
     const PAYLOAD = await RESPONSE.payload;
     const WORKSPACE = [], FAVORITE = [];
     Array.from(PAYLOAD).forEach(item => {
