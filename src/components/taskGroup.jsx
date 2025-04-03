@@ -17,7 +17,7 @@ export default function TaskGroup({ data }) {
             <section className="grid grid-cols-3 w-full gap-5 mt-4">
                 <div className="w-full">
                     <h4 className="text-xl text-watermelon-red border-b pb-3">Not Started</h4>
-                    <div className="grid w-full gap-5">
+                    <div className="grid w-full gap-5 mt-8">
                         {TK_NOT_STARTED && TK_NOT_STARTED.map(item => (
                             <CardComponent
                                 key={item.taskId}
@@ -33,7 +33,7 @@ export default function TaskGroup({ data }) {
                 </div>
                 <div className="w-full">
                     <h4 className="text-xl text-royal-blue border-b pb-3">In Progress</h4>
-                    <div className="grid w-full gap-5">
+                    <div className="grid w-full gap-5 mt-8">
                         {TK_IN_PROGRESS && TK_IN_PROGRESS.map(item => (
                             <CardComponent
                                 key={item.taskId}
@@ -49,7 +49,7 @@ export default function TaskGroup({ data }) {
                 </div>
                 <div className="w-full">
                     <h4 className="text-xl text-persian-green border-b pb-3">Finished</h4>
-                    <div className="grid w-full gap-5">
+                    <div className="grid w-full gap-5 mt-8">
                         {TK_FINISHED && TK_FINISHED.map(item => (
                             <CardComponent
                                 key={item.taskId}

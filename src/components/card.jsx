@@ -20,7 +20,7 @@ export default function CardComponent(props) {
     COLOR = "watermelon-red";
 
   return (
-    <div className="border border-gray-300 rounded-xl mt-8">
+    <div className="border border-gray-300 rounded-xl">
       <div className="p-5">
         <div className="flex justify-between">
           <h2 className="text-xl font-bold capitalize">{props?.title}</h2>

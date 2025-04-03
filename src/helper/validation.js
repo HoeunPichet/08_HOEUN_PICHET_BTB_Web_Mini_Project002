@@ -39,3 +39,18 @@ export const workspaceSchema = z.object({
         .max(50, { message: "Workspace Name cannot be greater than 50 characters." })
         .trim()
 });
+
+// Task validation message
+export const taskSchema = z.object({
+    taskTitle: z.string()
+        .nonempty({ message: "Task Title is required." })
+        .min(3, { message: "Task Title must be at least 3 characters." })
+        .max(50, { message: "Task Title cannot be greater than 50 characters." })
+        .trim(),
+    tag: z.string()
+        .nonempty({ message: "Tag is required." })
+        .trim(),
+    endDate: z.string()
+        .nonempty({ message: "End Date is required." })
+        .trim()
+});

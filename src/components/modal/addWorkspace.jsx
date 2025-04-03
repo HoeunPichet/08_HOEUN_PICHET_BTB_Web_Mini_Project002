@@ -34,7 +34,7 @@ export const AddWorkspace = () => {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger>
+            <AlertDialogTrigger className="cursor-pointer">
                 <Image src="/add-square.svg" width={24} height={24} alt="Add Workspace" />
             </AlertDialogTrigger>
             <AlertDialogContent className={"bg-white border-0 rounded-2xl"}>
@@ -51,7 +51,8 @@ export const AddWorkspace = () => {
                             </Label>
 
                             <Input
-                                type="workspace"
+                                id="workspace"
+                                type="text"
                                 name="workspaceName"
                                 placeholder="Please type your workspace"
                                 className={`bg-ghost-white ring-persian-green py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.workspaceName ? "!border-red-500" : "border-light-steel-blue"}`}
@@ -60,10 +61,10 @@ export const AddWorkspace = () => {
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel className={"px-5 h-10 text-base border-0 bg-red-500 text-white rounded-lg"}>
+                        <AlertDialogCancel className={"cursor-pointer px-5 h-10 text-base border-0 bg-red-500 text-white rounded-lg"}>
                             <span>Cancel</span>
                         </AlertDialogCancel>
-                        <button type="submit" className="px-5 h-10 text-base bg-persian-green text-white rounded-lg">
+                        <button type="submit" className="cursor-pointer px-5 h-10 text-base bg-persian-green text-white rounded-lg">
                             <span>Create</span>
                         </button>
                         {/* <AlertDialogAction>
