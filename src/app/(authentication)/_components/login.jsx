@@ -26,6 +26,7 @@ export default function LoginComponent() {
   // Apply register action when submitting form
   const handleLogin = async (formData) => {
     setIsPending(true);
+    await loginAction(formData);
     const RESPONSE = await loginAction(formData);
     if (typeof RESPONSE !== "undefined") {
       setErrors(RESPONSE);
