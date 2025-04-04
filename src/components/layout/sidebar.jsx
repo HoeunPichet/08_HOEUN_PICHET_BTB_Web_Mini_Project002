@@ -29,11 +29,11 @@ export const Sidebar = async () => {
             <section className="grid w-full max-h-1/3 content-start">
                 <div className="flex w-full justify-between items-center gap-5 px-7">
                     <h2 className="font-semibold text-2xl text-light-steel-blue">Workspace</h2>
-                    <AddWorkspace />
+                    <AddWorkspace type={false} />
                 </div>
                 <div className="flex flex-col gap-1 mt-4 h-full overflow-auto">
                     {WORKSPACE && WORKSPACE.map(item => (
-                        <Workspace key={item.workspaceId} href={`/todo/${item.workspaceId}?q=workspace`} name={item.workspaceName} color={item.color} />
+                        <Workspace key={item.workspaceId} id={item.workspaceId} href={`/todo/${item.workspaceId}?q=workspace`} name={item.workspaceName} color={item.color} />
                     ))}
                 </div>
             </section>
@@ -47,7 +47,7 @@ export const Sidebar = async () => {
                 </div>
                 <div className="flex flex-col gap-1 mt-4 h-full overflow-auto">
                     {FAVORITE && FAVORITE.map(item => (
-                        <Workspace key={item.workspaceId} href={`/todo/${item.workspaceId}?q=favorite`} name={item.workspaceName} color={item.color} />
+                        <Workspace key={item.workspaceId} id={item.workspaceId} href={`/todo/${item.workspaceId}?q=favorite`} name={item.workspaceName} color={item.color} />
                     ))}
                 </div>
             </section>

@@ -9,7 +9,7 @@ import { revalidateTag } from 'next/cache';
  * @since 02-April-2025
  * @param {*} formData
  */
-export const createWorkspaceAction = async (formData) => {
+export const createWorkspaceAction = async (id, formData) => {
     // Convert form data into object
     const FORM = Object.fromEntries(formData);
 
@@ -20,8 +20,11 @@ export const createWorkspaceAction = async (formData) => {
         // Response valiation message
         return VALIDATION.error.flatten().fieldErrors;
     } else {
-        await saveService(`/api/v1/workspace`, FORM);
+        if (id) {
+            await saveService(`/api/v1/workspace/${id}`, FORM, "PUT");
+        } else {
+            await saveService(`/api/v1/workspace`, FORM);
+        }
         revalidateTag("update-workspace");
     }
-
 }

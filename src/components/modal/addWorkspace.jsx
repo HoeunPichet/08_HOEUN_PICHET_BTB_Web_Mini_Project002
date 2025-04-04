@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -18,13 +17,24 @@ import Image from 'next/image'
 import { createWorkspaceAction } from '@/action/workspace-action';
 import ErrorMessage from '../messages/errorMessage';
 
-export const AddWorkspace = () => {
+export const AddWorkspace = ({ id, name, type }) => {
     // Default error message
     const [errors, setErrors] = useState({});
 
-    // Apply register action when submitting form
+    // Default input field value
+    const [formData, setFormData] = useState({
+        workspaceName: name ? name : ""
+    });
+
+    // Assign value to input field
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Apply workspace action when submitting form
     const handleWorkspace = async (formData) => {
-        const RESPONSE = await createWorkspaceAction(formData);
+        const RESPONSE = await createWorkspaceAction(id, formData);
         if (typeof RESPONSE !== "undefined") {
             setErrors(RESPONSE);
         } else {
@@ -34,13 +44,18 @@ export const AddWorkspace = () => {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger className="cursor-pointer">
-                <Image src="/add-square.svg" width={24} height={24} alt="Add Workspace" />
+            <AlertDialogTrigger className="cursor-pointer w-fit">
+                {!type &&
+                    <Image src="/add-square.svg" width={24} height={24} alt="Add Workspace" />
+                }
+                {type &&
+                    <Image src={"/more.svg"} width={24} height={24} alt="More" />
+                }
             </AlertDialogTrigger>
             <AlertDialogContent className={"bg-white border-0 rounded-2xl"}>
                 <form action={handleWorkspace}>
                     <AlertDialogHeader>
-                        <AlertDialogTitle className={"text-charcoal font-semibold text-xl"}>Create New Workspace</AlertDialogTitle>
+                        <AlertDialogTitle className={"text-charcoal font-semibold text-xl"}>{!type ? "Create New Workspace" : "Edit Workspace"}</AlertDialogTitle>
                         <AlertDialogDescription className="mt-5 mb-5">
 
                             <Label
@@ -54,7 +69,9 @@ export const AddWorkspace = () => {
                                 id="workspace"
                                 type="text"
                                 name="workspaceName"
+                                value={formData.workspaceName}
                                 placeholder="Please type your workspace"
+                                onChange={handleChange}
                                 className={`bg-ghost-white ring-persian-green py-2.5 px-4 rounded-lg w-full text-light-steel-blue/90 ${errors.workspaceName ? "!border-red-500" : "border-light-steel-blue"}`}
                             />
                             {errors.workspaceName && <ErrorMessage message={errors?.workspaceName[0]} />}
@@ -65,10 +82,8 @@ export const AddWorkspace = () => {
                             <span>Cancel</span>
                         </AlertDialogCancel>
                         <button type="submit" className="cursor-pointer px-5 h-10 text-base bg-persian-green text-white rounded-lg">
-                            <span>Create</span>
+                            <span>{!type ? "Create" : "Update"}</span>
                         </button>
-                        {/* <AlertDialogAction>
-                        </AlertDialogAction> */}
                     </AlertDialogFooter>
                 </form>
             </AlertDialogContent>
