@@ -22,7 +22,7 @@ export const AddTask = ({ id }) => {
     // Default error message
     const [errors, setErrors] = useState({});
 
-    // Apply register action when submitting form
+    // Apply create task action when submitting form
     const handleTask = async (formData) => {
         const RESPONSE = await createTaskAction(id, formData);
         if (typeof RESPONSE !== "undefined") {

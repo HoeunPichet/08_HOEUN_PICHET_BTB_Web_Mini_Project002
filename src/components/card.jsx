@@ -1,4 +1,5 @@
 "use client"
+import { updateTaskStatusAction } from "@/action/task-action";
 import {
   Select,
   SelectContent,
@@ -6,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { saveService } from "@/service/service";
 import { Clock, Ellipsis } from "lucide-react";
 import React from "react";
 
@@ -18,6 +18,13 @@ export default function CardComponent(props) {
     COLOR = "persian-green";
   else
     COLOR = "watermelon-red";
+
+  // Apply create task action when submitting form
+  const handleStatus = async (value) => {
+    if (value != props?.status) {
+      await updateTaskStatusAction(props?.id, props?.wsId, value);
+    }
+  }
 
   return (
     <div className="border border-gray-300 rounded-xl">
@@ -45,13 +52,13 @@ export default function CardComponent(props) {
 
       {/* progress */}
       <div className="flex justify-between items-center border-t border-t-gray-300 p-5">
-        <Select>
+        <Select onValueChange={handleStatus}>
           <SelectTrigger
             className={`w-36 truncate border-${COLOR} text-${COLOR}`}
           >
             <SelectValue placeholder={props?.status || "NOT_STARTED"} />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={"bg-white border-0 shadow-2xl"}>
             <SelectItem value="NOT_STARTED">NOT_STARTED</SelectItem>
             <SelectItem value="IN_PROGRESS">IN_PROGRESS</SelectItem>
             <SelectItem value="FINISHED">FINISHED</SelectItem>

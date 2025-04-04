@@ -5,6 +5,8 @@ import Logo from "../logo";
 import { getService } from "@/service/service";
 import { getRandomColorClass } from "@/helper/random";
 import { AddWorkspace } from "../modal/addWorkspace";
+import { logoutAction } from "@/action/logout-action";
+import { LogOut } from "lucide-react";
 
 export const Sidebar = async () => {
     const RESPONSE = await getService("/api/v1/workspaces", "update-workspace");
@@ -50,10 +52,12 @@ export const Sidebar = async () => {
                 </div>
             </section>
 
-            <footer className="mt-7 px-7 flex gap-3 w-full">
-                <Image src="/logout.svg" width={24} height={24} alt="Logout" />
-                <h3 className="font-semibold text-xl text-light-steel-blue">Logout</h3>
-            </footer>
+            <form action={logoutAction} className="mt-7 px-7 w-full">
+                <button type="submit" className="flex gap-3 w-full cursor-pointer">
+                    <LogOut size={24} className="text-persian-green" />
+                    <h3 className="font-semibold text-xl text-persian-green">Logout</h3>
+                </button>
+            </form>
         </aside>
     );
 }

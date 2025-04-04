@@ -18,7 +18,7 @@ export default async function WorkSpacePage({ params, searchParams }) {
             <HeaderLayout main={MAIN_TITLE} title={PAYLOAD_WS.workspaceName} />
             <main className="px-14 2xl:px-20 py-5 w-full">
                 <WorkspaceHeader id={PAYLOAD_WS.workspaceId} title={PAYLOAD_WS.workspaceName} isFavorite={PAYLOAD_WS.isFavorite} />
-                <TaskGroup data={PAYLOAD_TK} />
+                <TaskGroup wsId={WS_ID} data={PAYLOAD_TK} />
             </main>
             <div className="fixed bottom-5 right-5">
                 <AddTask id={WS_ID} />

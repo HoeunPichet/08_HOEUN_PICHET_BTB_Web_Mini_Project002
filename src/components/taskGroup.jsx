@@ -1,7 +1,7 @@
 import { formatDate } from "@/helper/format";
 import CardComponent from "./card";
 
-export default function TaskGroup({ data }) {
+export default function TaskGroup({ wsId, data }) {
     const TK_NOT_STARTED = [];
     const TK_IN_PROGRESS = [];
     const TK_FINISHED = [];
@@ -21,6 +21,8 @@ export default function TaskGroup({ data }) {
                         {TK_NOT_STARTED && TK_NOT_STARTED.map(item => (
                             <CardComponent
                                 key={item.taskId}
+                                id={item.taskId}
+                                wsId={wsId}
                                 title={item.taskTitle}
                                 description={item.taskDetails}
                                 tag={item.tag}
@@ -37,6 +39,8 @@ export default function TaskGroup({ data }) {
                         {TK_IN_PROGRESS && TK_IN_PROGRESS.map(item => (
                             <CardComponent
                                 key={item.taskId}
+                                id={item.taskId}
+                                wsId={wsId}
                                 title={item.taskTitle}
                                 description={item.taskDetails}
                                 tag={item.tag}
@@ -53,6 +57,8 @@ export default function TaskGroup({ data }) {
                         {TK_FINISHED && TK_FINISHED.map(item => (
                             <CardComponent
                                 key={item.taskId}
+                                id={item.taskId}
+                                wsId={wsId}
                                 title={item.taskTitle}
                                 description={item.taskDetails}
                                 tag={item.tag}
