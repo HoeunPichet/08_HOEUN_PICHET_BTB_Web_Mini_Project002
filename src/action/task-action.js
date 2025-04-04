@@ -20,8 +20,14 @@ export const createTaskAction = async (id, formData) => {
         // Response valiation message
         return VALIDATION.error.flatten().fieldErrors;
     } else {
-        await saveService(`/api/v1/task/workspace/${id}`, FORM);
-        revalidateTag("update-workspace");
+        const RESPONSE = await saveService(`/api/v1/task/workspace/${id}`, FORM);
+
+        if (RESPONSE?.status == 500) {
+            return { endDate: ["End Date cannot be in the past."] }
+        } else {
+            revalidateTag("update-workspace");
+        }
+
     }
 
 }
